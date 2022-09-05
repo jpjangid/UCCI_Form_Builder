@@ -1,0 +1,176 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<app-dashboard-sidemenu></app-dashboard-sidemenu>
+
+<!-- ********************** Main Content ******************** -->
+
+<div class="main-content d-flex flex-column">
+
+  <app-dashboard-navbar></app-dashboard-navbar>
+
+  <!-- ********************** Breadcrumb Area  ******************** -->
+
+  <div class="breadcrumb-area" *ngFor="let Content of breadcrumb;">
+    <h1>{{Content.title}}</h1>
+    <ol class="breadcrumb">
+      <li class="item"><a routerLink="/">Home</a></li>
+      <li class="item"><a routerLink="dashboard">{{Content.subTitle}}</a></li>
+      <li class="item">{{Content.title}}</li>
+    </ol>
+  </div>
+
+  <!-- ********************** End Breadcrumb Area  ******************** -->
+
+  <!-- ********************** Add Master Form Area  ******************** -->
+
+  <div class="add-listings-box">
+    <!-- <h3>Add Master Name</h3> -->
+    <form [formGroup]="postFeesForm" (ngSubmit)="onSubmit()">
+      <div class="row mt-1">
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="form-group">Fees Name<span style="color: red;">*</span>: 
+            <input type="text" class="form-control" placeholder="Fee Name" formControlName="fee_name" required
+              [value]="feeName" #focus (keyup)="onSetValidState()">
+              <span *ngIf="this.validFeesName == false;" style="color: red; font-size: 12px;">Fee Name Required</span>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="form-group">Fee Category<span style="color: red;">*</span>:
+            <input type="text" class="form-control" placeholder="Fee Category" formControlName="fee_category" required
+              [value]="feeCategory" #focus (keyup)="onSetValidState()">
+              <span *ngIf="this.validFeesCategory == false;" style="color: red; font-size: 12px;">Fee Category Required</span>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="form-group">Member Amount<span style="color: red;">*</span>:
+            <input type="number" class="form-control" placeholder="Member Amount" formControlName="member_amount" required
+              [value]="memberAmount" #focus (keyup)="onSetValidState()">
+              <span *ngIf="this.validMemberFees == false;" style="color: red; font-size: 12px;">Member Amount Required</span>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="form-group">Non Member Amount<span style="color: red;">*</span>:
+            <input type="number" class="form-control" placeholder="Non Member Amount" formControlName="non_member_amount" required
+              [value]="nonMemberAmount" #focus (keyup)="onSetValidState()">
+              <span *ngIf="this.validNonMemberFees == false;" style="color: red; font-size: 12px;">Non Member Amount Required</span>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="form-group">Tax<span style="color: red;">*</span>:
+            <input type="number" class="form-control" placeholder="Tax" formControlName="taxes" required
+              [value]="tax" #focus (keyup)="onSetValidState()">
+              <span *ngIf="this.validTax == false;" style="color: red; font-size: 12px;">Tax Required</span>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="add-listings-btn">
+            <!-- [disabled]="!postMemberCategoriesForm.valid" --> 
+            <button type="submit" >{{btnText}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- ********************** End Add Master Form Area  ******************** -->
+
+  <!-- ********************** Master View Area  ******************** -->
+
+  <div class="Master-view-box">
+    <h3>Member Categories</h3>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+
+        <!-- <p-calendar [(ngModel)]="value" [inline]="true"></p-calendar> -->
+        <div class="card">
+
+        </div>
+        <p-table #dt2 [value]="feesData" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+          styleClass="p-datatable-sm p-datatable-customers p-datatable-striped" [rowsPerPageOptions]="[10,25,50]"
+          [loading]="loading" [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [globalFilterFields]="['name']">
+          <ng-template pTemplate="caption">
+            <div class="flex" style="display: flex; width: 100%; justify-content: flex-end;">
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                  placeholder="Search keyword" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" style="min-height: 500px;">
+            <tr>
+              <th>S. No.</th>
+              <th>Fees Name</th>
+              <th>Fees Categories</th>
+              <th>Member Fees</th>
+              <th>Non Member Fees</th>
+              <th>Tax</th>
+              <th></th>
+              <th></th>
+            </tr>
+            <!-- <tr>
+              <th>
+              </th>
+              <th>
+                <div style="max-width"><p-columnFilter type="text" field="name"></p-columnFilter></div>
+              </th>
+              <th></th>
+              <th></th>
+            </tr> -->
+          </ng-template>
+
+          <ng-template pTemplate="body" let-fee let-i="rowIndex">
+            <tr>
+              <td>
+                {{i+1}}
+              </td>
+              <td>
+                {{fee.fee_name}}
+              </td>
+              <td>
+                {{fee.fee_category}}
+              </td>
+              <td>
+                {{fee.member_amount}}
+              </td>
+              <td>
+                {{fee.non_member_amount}}
+              </td>
+              <td>
+                {{fee.taxes}}
+              </td>
+              <td style="text-align: right;">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                  (click)="editMemberCategoryMaster(fee)"></button>
+
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                  (click)="deleteMaster(fee)"></button>
+              </td>
+              <td>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">No customers found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ********************** End Master View Area  ******************** -->
+
+  <div class="flex-grow-1"></div>
+
+  <!-- ********************** Copyrights Area  ******************** -->
+
+  <app-copyrights></app-copyrights>
+
+  <!-- ********************** End Copyrights Area  ******************** -->
+
+</div>

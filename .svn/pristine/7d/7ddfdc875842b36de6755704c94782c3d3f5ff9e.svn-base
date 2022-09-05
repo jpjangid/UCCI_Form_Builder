@@ -1,0 +1,39 @@
+{
+  "data" : [
+    {
+      "id": 1,
+      "place": "Palace",
+      "bookedDate": "29/08/2022"
+    },
+    {
+      "id": 2,
+      "place": "Hall",
+      "bookedDate": "29/08/2022"
+    },
+    {
+      "id": 3,
+      "place": "Palace",
+      "bookedDate": "29/08/2022"
+    },
+    {
+      "id": 4,
+      "place": "Auditorium",
+      "bookedDate": "29/08/2022"
+    },
+    {
+      "id": 5,
+      "place": "Palace",
+      "bookedDate": "11/09/2022"
+    },
+    {
+      "id": 6,
+      "place": "Auditorium",
+      "bookedDate": "15/09/2022"
+    },
+    {
+      "id": 7,
+      "place": "Hall",
+      "bookedDate": "19/09/2022"
+    }
+  ]
+}

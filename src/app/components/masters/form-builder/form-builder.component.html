@@ -1,0 +1,55 @@
+<p-toast></p-toast>
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="flex flex-column" style="flex: 1">
+          <div class="text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+          </div>
+          <div class="grid p-fluid">
+              <div class="col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+              </div>
+              <div class="col-6">
+                  <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
+
+<app-dashboard-sidemenu></app-dashboard-sidemenu>
+
+<!-- ********************** Main Content ******************** -->
+
+<div class="main-content d-flex flex-column">
+
+  <app-dashboard-navbar></app-dashboard-navbar>
+
+  <!-- ********************** Breadcrumb Area  ******************** -->
+
+  <div class="breadcrumb-area" *ngFor="let Content of breadcrumb;">
+    <h1>{{Content.title}}</h1>
+    <ol class="breadcrumb">
+      <li class="item"><a routerLink="/">Home</a></li>
+      <li class="item"><a routerLink="dashboard">{{Content.subTitle}}</a></li>
+      <li class="item">{{Content.title}}</li>
+    </ol>
+  </div>
+  <div class="add-listings-box">
+      <div class="top_section">
+        <!-- <h3>Custom Forms List</h3> -->
+        <!-- <div class="add-listings-btn"> -->
+          <!-- [disabled]="!postMemberCategoriesForm.valid" -->
+          <!-- <button type="submit" (click)="navigateToFormBuilder()"><i class="fa fa-plus mx-1"></i>Add</button> -->
+          <label for="title">Enter Form Title</label>
+          <input type="text" [(ngModel)]="formModel.form_name" class="form-control" placeholder="Enter title here">
+        <!-- </div> -->
+      </div>
+  </div>
+  <lib-form-builder [buttonFields]="buttonFields" (formJson)="getJson($event)"></lib-form-builder>
+  <lib-form-renderer *ngIf="jsonData" [jsonFormData]="jsonData"></lib-form-renderer>
+  <!-- ********************** End Breadcrumb Area  ******************** -->
+
+</div>
